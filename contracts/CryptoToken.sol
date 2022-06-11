@@ -57,12 +57,12 @@ contract CryptoToken is IERC20{
     emit Transfer(address(0), account, amount);
     }
     
-    function burn(address account, uint256 amount) public isOwner {
+    function burn(uint256 amount) public isOwner {
     _isPaused();
     require(amount != 0);
-    require(amount <= addressToBalance[account]);
-    setAddressToBalanceSub(account, amount);
-    emit Transfer(account, address(0), amount);
+    require(amount <= addressToBalance[msg.sender]);
+    setAddressToBalanceSub(amount);
+    emit Transfer(msg.sender, address(0), amount);
     }
 
     //Public Functions
@@ -89,11 +89,11 @@ contract CryptoToken is IERC20{
     addressToBalance[tokenOwner] = addressToBalance[tokenOwner] + amount;
     }
 
-    function setAddressToBalanceSub(address tokenOwner, uint256 amount) public isOwner{
+    function setAddressToBalanceSub(uint256 amount) public isOwner{
     _isPaused();
     uint256 _totalSupply = totalSupply() - amount;
     setTotalSupply(_totalSupply);
-    addressToBalance[tokenOwner] = addressToBalance[tokenOwner] - amount;
+    addressToBalance[msg.sender] = addressToBalance[msg.sender] - amount;
     }
 
     function balanceOf(address tokenOwner) public override view returns(uint256) {

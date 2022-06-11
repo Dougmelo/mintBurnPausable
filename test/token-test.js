@@ -120,7 +120,7 @@ describe("Transactions mint equal values ", function() {
 
 describe("Transactions burn sub", function() {
   it("The totalSuply value and the Owner's wallet value must receive the new value.", async function () {
-    await hardhatToken.burn(owner.address, 50);
+    await hardhatToken.burn(50);
     expect(await hardhatToken.totalSupply()).to.equal(950);
     expect(await hardhatToken.balanceOf(owner.address)).to.equal(950);
   });
@@ -146,12 +146,12 @@ describe("Transactions setAddressToBalanceSum", function() {
 
 describe("Transactions setAddressToBalanceSub", function() {
   it("The adr wallet value must receive the added value.", async function () {
-    await hardhatToken.setAddressToBalanceSum(addr1.address, 50);
-    console.log("valor aqui antes: " +  await hardhatToken.balanceOf(addr1.address));
-    await hardhatToken.setAddressToBalanceSub(addr1.address, 50);
-    console.log("valor aqui depois: " + await hardhatToken.balanceOf(addr1.address));
-    expect(await hardhatToken.balanceOf(addr1.address)).to.equal(0);
-    expect(await hardhatToken.totalSupply()).to.equal(1000);
+    //await hardhatToken.setAddressToBalanceSum(addr1.address, 50);
+    //console.log("valor aqui antes: " +  await hardhatToken.balanceOf(addr1.address));
+    await hardhatToken.setAddressToBalanceSub(50);
+    //console.log("valor aqui depois: " + await hardhatToken.balanceOf(addr1.address));
+    expect(await hardhatToken.balanceOf(owner.address)).to.equal(950);
+    expect(await hardhatToken.totalSupply()).to.equal(950);
   });
 });
 
@@ -163,10 +163,10 @@ describe("Pause contract", function() {
     await expect(await hardhatToken.isPaused()).to.equal(true);
 
     await expect(hardhatToken.mint(owner.address, 50)).to.be.reverted;
-    await expect(hardhatToken.burn(owner.address, 50)).to.be.reverted;
+    await expect(hardhatToken.burn(50)).to.be.reverted;
     await expect(hardhatToken.pause()).to.be.reverted;
     await expect(hardhatToken.setAddressToBalanceSum(addr1.address, 50)).to.be.reverted;
-    await expect(hardhatToken.setAddressToBalanceSub(addr1.address, 50)).to.be.reverted;
+    await expect(hardhatToken.setAddressToBalanceSub(50)).to.be.reverted;
     await expect(hardhatToken.transfer(addr1.address, 50)).to.be.reverted;
     await expect(hardhatToken.balanceOf(owner.address)).to.be.reverted;
     await expect(hardhatToken.totalSupply()).to.be.reverted;
@@ -183,9 +183,9 @@ describe("UnPause contract", function() {
     await expect(await hardhatToken.isPaused()).to.equal(false);
 
     await expect(hardhatToken.mint(owner.address, 50)).to.be.not.reverted;
-    await expect(hardhatToken.burn(owner.address, 50)).to.be.not.reverted;
+    await expect(hardhatToken.burn(50)).to.be.not.reverted;
     await expect(hardhatToken.setAddressToBalanceSum(addr1.address, 50)).to.be.not.reverted;
-    await expect(hardhatToken.setAddressToBalanceSub(addr1.address, 50)).to.be.not.reverted;
+    await expect(hardhatToken.setAddressToBalanceSub(50)).to.be.not.reverted;
     await expect(hardhatToken.transfer(addr1.address, 50)).to.be.not.reverted;
     await expect(hardhatToken.balanceOf(owner.address)).to.be.not.reverted;
     await expect(hardhatToken.totalSupply()).to.be.not.reverted;
