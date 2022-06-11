@@ -38,8 +38,8 @@ npx hardhat test
 - `burn` - queima tokens adicionando o novo valor no totalSupply e na carteira Owner, está função apenas será realizada por o Owner do contrato
 - `pause` - pausa toda a parte critica do contrato, impedindo de acessar suas principais funcionalidades para controle de bugs e ataques hackers, está função apenas será realizada por o Owner do contrato
 - `unPause` - retira o contrato do modo pause, liberando todo o acesso as suas funcionalidades, está função apenas será realizada por o Owner do contrato
-- `setAddressToBalanceSum` - criar novos tokens e os adiciona no totalSupplly e carteira, está função apenas será realizada por o Owner do contrato
--  `setAddressToBalanceSub` - Queima tokens e adiciona o resultado no totalSupplly e carteira, está função apenas será realizada por o Owner do contrato
+- `setAddressToBalanceSum` - criar novos tokens e os adiciona no totalSupplly e carteira desejada, está função apenas será realizada por o Owner do contrato
+-  `setAddressToBalanceSub` - queima tokens, diminuindo o valor do totalSupplly e subtraindo da carteira do Owner, está função apenas será realizada por o Owner do contrato
 - `transfer` - função usada para tranferir tokens entre inscritos do contrato
 - `totalSupply` - mostra o totalSupply do contrato
 - `owner` - tem controle total sobre o contrato, e não atribui um novo Owner
