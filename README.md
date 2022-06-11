@@ -17,6 +17,10 @@ git clone https://github.com/Dougmelo/mintBurnPausable.git
 ```
 
 ```bash
+cd mintBurnPausable
+```
+
+```bash
 npm install
 ```
 
