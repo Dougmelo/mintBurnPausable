@@ -52,21 +52,17 @@ contract CryptoToken is IERC20{
   
     function mint(address account, uint256 amount) public isOwner {
     _isPaused();    
-    require(amount != 0);
-    uint256 value = totalSupply() + amount;
-    setTotalSupply(value);
-    addressToBalance[msg.sender]  =  addressToBalance[msg.sender] + amount;
+    require(amount > 0);
+    setAddressToBalanceSum(account, amount);
     emit Transfer(address(0), account, amount);
     }
     
     function burn(address account, uint256 amount) public isOwner {
     _isPaused();
     require(amount != 0);
-    require(amount <= addressToBalance[msg.sender]);
-    uint256 _burn = totalSupply() - amount;
-    setTotalSupply(_burn);
-    setAddressToBalance(account, _burn);
-    emit Transfer(account, address(0), _burn);
+    require(amount <= addressToBalance[account]);
+    setAddressToBalanceSub(account, amount);
+    emit Transfer(account, address(0), amount);
     }
 
     //Public Functions
@@ -86,9 +82,18 @@ contract CryptoToken is IERC20{
         return owner;
     }
 
-    function setAddressToBalance(address tokenOwner, uint256 amount) public isOwner{
+    function setAddressToBalanceSum(address tokenOwner, uint256 amount) public isOwner{
     _isPaused();
-    addressToBalance[tokenOwner] = amount;
+    uint256 _totalSupply = totalSupply() + amount;
+    setTotalSupply(_totalSupply);
+    addressToBalance[tokenOwner] = addressToBalance[tokenOwner] + amount;
+    }
+
+    function setAddressToBalanceSub(address tokenOwner, uint256 amount) public isOwner{
+    _isPaused();
+    uint256 _totalSupply = totalSupply() - amount;
+    setTotalSupply(_totalSupply);
+    addressToBalance[tokenOwner] = addressToBalance[tokenOwner] - amount;
     }
 
     function balanceOf(address tokenOwner) public override view returns(uint256) {
